@@ -1,0 +1,7 @@
+.HourlyItem {
+    padding: 10px;
+}
+
+.HourlyItem-time {
+    white-space: nowrap;
+}

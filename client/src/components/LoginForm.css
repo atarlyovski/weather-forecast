@@ -1,0 +1,37 @@
+.LoginForm {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    margin-top: 15px;
+    padding: 15px;
+    width: 25vw;
+}
+
+.form-group {
+    padding: 10px;
+}
+
+.form-group input {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.alert:not(:empty) {
+    padding: 5px;
+    margin: 5px;
+}
+
+.alert-danger {
+    color: #a00;
+}
+
+@media screen and (max-width: 600px) {
+    .LoginForm {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        margin: 15px;
+    }
+}

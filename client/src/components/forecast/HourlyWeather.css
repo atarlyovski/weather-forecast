@@ -1,0 +1,17 @@
+#hourlyWeather {
+    flex: 4 4 auto;
+    max-width: 600px;
+}
+
+#hourlyWeather-items {
+    display: flex;
+    overflow: auto;
+}
+
+@media screen and (max-width: 600px) {
+    #hourlyWeather {
+        display: block;
+        max-width: 100%;
+        width: auto;
+    }
+}

@@ -1,0 +1,11 @@
+.ForecastContainer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .ForecastContainer {
+        display: block;
+    }
+}
