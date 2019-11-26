@@ -4,7 +4,8 @@
   "description": "A weather forecast app",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js --ignore db.json",
+    "start": "node app.js",
+    "start-nodemon": "nodemon app.js --ignore db.json",
     "test": "test"
   },
   "author": "Alexander Tarlyovski",
