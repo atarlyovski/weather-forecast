@@ -1,76 +1,65 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import './Toolbar.css';
 
 import store from '../redux/store';
 import { setUser, logOut } from '../redux/actions';
 
-class Toolbar extends React.Component {
-    constructor(props) {
-        super(props)
+function Toolbar() {
+    let { location, user, serverHost } = useSelector(state => state);
+    let isLoggedIn = user ? true : false;
 
-        this.logOut = this.logOut.bind(this);
-    }
+    let logOutButton = <button
+            onClick={logOutUser}
+            className="btn">
+        Log Out
+    </button>
 
-    async componentDidMount() {
-        var user,
-            response,
-            userDataUrl = '/api/user/userData';
+    useEffect(() => {
+        async function fetchData() {
+            var user,
+                response,
+                userDataUrl = '/api/user/userData';
 
-        try {
-            response = await fetch(this.props.serverHost + userDataUrl, {
-                credentials: "include",
-                mode: 'cors'
-            });
-
-            if (response.ok) {
-                user = await response.json();
-
-                if (!user || !user.username) {
+            try {
+                response = await fetch(serverHost + userDataUrl, {
+                    credentials: "include",
+                    mode: 'cors'
+                });
+    
+                if (response.ok) {
+                    user = await response.json();
+    
+                    if (!user || !user.username) {
+                        user = null;
+                    }
+                } else {
                     user = null;
                 }
-            } else {
-                user = null;
+            } catch (err) {
+                console.error(err);
+                return;
             }
-        } catch (err) {
-            console.error(err);
-            return;
+
+            store.dispatch(setUser(user));
         }
 
-        store.dispatch(setUser(user));
-    }
+        fetchData();
+    }, [serverHost])
 
-    logOut() {
+    function logOutUser() {
         store.dispatch(logOut());
     }
 
-    render() {
-        let isLoggedIn = this.props.user ? true : false;
-
-        let logOutButton = <button
-                onClick={this.logOut}
-                className="btn">
-            Log Out
-        </button>
-
-        return (
-            <div className="Toolbar">
-                <h1>{this.props.location}</h1>
-                <div className="Toolbar-user">
-                    <div>{isLoggedIn ? this.props.user.username : <i>Not logged in</i>}</div>
-                    {isLoggedIn ? logOutButton : null}
-                </div>
+    return (
+        <div className="Toolbar">
+            <h1>{location}</h1>
+            <div className="Toolbar-user">
+                <div>{isLoggedIn ? user.username : <i>Not logged in</i>}</div>
+                {isLoggedIn ? logOutButton : null}
             </div>
-        )
-    }
+        </div>
+    )
 }
 
-function mapStateToProps(state) {
-    return {
-        serverHost: state.serverHost,
-        location: state.location,
-        user: state.user
-    }
-}
-
-export default connect(mapStateToProps)(Toolbar);
+export default Toolbar;
